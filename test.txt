@@ -1,0 +1,3 @@
+IQ | HOURS | PASSFAIL
+21 | 9     |   0
+90 | 40    |   1
