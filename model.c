@@ -17,7 +17,7 @@ double sigmoid(double z){
     return p;
 }
 
-int main(void){
+int main(int AC, char *ARG[]){
     double w0=0.1;double w1=0.1;double w2=0.1;
     double z;
     for(int ep = 1 ; ep < epLimit ; ep++){
@@ -37,7 +37,9 @@ int main(void){
         if ( fabs(w0-prev_w0) < 0.0001 && fabs(w1-prev_w1) < 0.0001 && fabs(w2-prev_w2) < 0.0001){
             printf("epoch = %d\n",ep);
             printf("\033[0;32mGradients Converge at\033[0m\n\t\033[0;33mw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\033[0m\n",w0,w1,w2);
-            printf("\nEqn for Z:\n\tZ = (%.3f) + (%.3f)USR + (%.3f)IRR\n",w0,w1,w2);
+            printf("\nLogit Equation:\n\tZ = (%.3f) + (%.3f)USR + (%.3f)IRR\n",w0,w1,w2);
+            z = w0 + (w1)*(atof(ARG[1])) + (w2)*(atof(ARG[2]));
+            printf("\nLogit(inputUSR,inputIRR) = %f\nSigmoid: %f\n",z,sigmoid(z));  
             exit(EXIT_SUCCESS);
         }
         //printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
