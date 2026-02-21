@@ -9,6 +9,7 @@ int IST[20] = {0,1,0,1,0,1,1,0,1,1,0,1,1,0,1,0,1,1,0,1};
 double Ps[20];
 int n = sizeof(USR)/sizeof(USR[0]);
 double s0,s1,s2;
+int epLimit = 10;
 
 double sigmoid(double z){
     double p = (1)/(1+exp(-z));
@@ -16,22 +17,23 @@ double sigmoid(double z){
 }
 
 int main(void){
-    double w0=0.1;
-    double w1=0.1;
-    double w2=0.1;
+    double w0=0.1;double w1=0.1;double w2=0.1;
     double z;
-    for(int pos  = 0; pos < n ; pos++){
-        z=w0+(w1)*(USR[pos])+(w2)*(IRR[pos]);
-        Ps[pos]=sigmoid(z);
-        printf("z = %f\tsigmoid = %f\n",z,Ps[pos]);
-        s0 += (Ps[pos]-IST[pos]);
-        s1 += (Ps[pos]-IST[pos])*(USR[pos]);
-        s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
+    for(int ep = 1 ; ep < epLimit ; ep++){
+        s0=0;s1=0;s2=0;
+        for(int pos  = 0; pos < n ; pos++){
+            z=w0+(w1)*(USR[pos])+(w2)*(IRR[pos]);
+            Ps[pos]=sigmoid(z);
+            //printf("z = %f\tsigmoid = %f\n",z,Ps[pos]);
+            s0 += (Ps[pos]-IST[pos]);
+            s1 += (Ps[pos]-IST[pos])*(USR[pos]);
+            s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
+        }
+        w0 = w0 - alpha*s0 ;
+        w1 = w1 - alpha*s1 ;
+        w2 = w2 - alpha*s2 ;
+        printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
     }
-    w0 = w0 - alpha*s0 ;
-    w1 = w1 - alpha*s1 ;
-    w2 = w2 - alpha*s2 ;
-    printf("Adjusted:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",w0,w1,w2);
     return 0;
 }
 
