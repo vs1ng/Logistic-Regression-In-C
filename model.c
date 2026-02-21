@@ -35,10 +35,10 @@ int main(void){
         w1 = w1 - alpha*(s1/n) ;
         w2 = w2 - alpha*(s2/n) ;
         if ( fabs(w0-prev_w0) < 0.0001 && fabs(w1-prev_w1) < 0.0001 && fabs(w2-prev_w2) < 0.0001){
-            printf("Converged!!!!!!!!");
+            printf("\033[0;32mGradients Converge at\033[0m\n\t\033[0;33mw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\033[0m\n",w0,w1,w2);
             exit(EXIT_SUCCESS);
         }
-        printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
+        //printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
     }
     return 0;
 }
