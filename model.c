@@ -1,6 +1,7 @@
 #include <complex.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 const double alpha = 0.01;
 int USR[20] = {21,7,5,15,30,8,12,25,18,6,22,9,14,28,11,19,4,16,23,10};
@@ -9,7 +10,7 @@ int IST[20] = {0,1,0,1,0,1,1,0,1,1,0,1,1,0,1,0,1,1,0,1};
 double Ps[20];
 int n = sizeof(USR)/sizeof(USR[0]);
 double s0,s1,s2;
-int epLimit = 10;
+int epLimit = 100000;
 
 double sigmoid(double z){
     double p = (1)/(1+exp(-z));
@@ -29,9 +30,14 @@ int main(void){
             s1 += (Ps[pos]-IST[pos])*(USR[pos]);
             s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
         }
+        double prev_w0 = w0,prev_w1 = w1,prev_w2 = w2;
         w0 = w0 - alpha*(s0/n) ;
         w1 = w1 - alpha*(s1/n) ;
         w2 = w2 - alpha*(s2/n) ;
+        if ( fabs(w0-prev_w0) < 0.0001 && fabs(w1-prev_w1) < 0.0001 && fabs(w2-prev_w2) < 0.0001){
+            printf("Converged!!!!!!!!");
+            exit(EXIT_SUCCESS);
+        }
         printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
     }
     return 0;
