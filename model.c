@@ -1,4 +1,3 @@
-#include <complex.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -12,22 +11,20 @@ int n = sizeof(USR)/sizeof(USR[0]);
 double s0,s1,s2;
 int epLimit = 100000;
 
-double sigmoid(double z){
-    double p = (1)/(1+exp(-z));
-    return p;
-}
+double sigmoid(double z){ return (1)/(1+exp(-z)); }
 
 int main(int AC, char *ARG[]){
     double w0=0.1;double w1=0.1;double w2=0.1;
-    double z;
+    double z,error;
     for(int ep = 1 ; ep < epLimit ; ep++){
         s0=0;s1=0;s2=0;
         for(int pos  = 0; pos < n ; pos++){
             z=w0+(w1)*(USR[pos])+(w2)*(IRR[pos]);
             Ps[pos]=sigmoid(z);
-            s0 += (Ps[pos]-IST[pos]);
-            s1 += (Ps[pos]-IST[pos])*(USR[pos]);
-            s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
+            error = (Ps[pos]-IST[pos]);
+            s0 += error;
+            s1 += (error)*(USR[pos]);
+            s2 += (error)*(IRR[pos]);
         }
         double prev_w0 = w0,prev_w1 = w1,prev_w2 = w2;
         w0 = w0 - alpha*(s0/n) ;
