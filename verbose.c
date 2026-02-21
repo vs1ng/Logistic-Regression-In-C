@@ -25,6 +25,7 @@ int main(int AC, char *ARG[]){
         for(int pos  = 0; pos < n ; pos++){
             z=w0+(w1)*(USR[pos])+(w2)*(IRR[pos]);
             Ps[pos]=sigmoid(z);
+            //printf("z = %f\tsigmoid = %f\n",z,Ps[pos]);
             s0 += (Ps[pos]-IST[pos]);
             s1 += (Ps[pos]-IST[pos])*(USR[pos]);
             s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
@@ -34,12 +35,17 @@ int main(int AC, char *ARG[]){
         w1 = w1 - alpha*(s1/n) ;
         w2 = w2 - alpha*(s2/n) ;
         if ( fabs(w0-prev_w0) < 0.0001 && fabs(w1-prev_w1) < 0.0001 && fabs(w2-prev_w2) < 0.0001){
+            printf("epoch = %d\n",ep);
+            printf("\033[0;32mGradients Converge at\033[0m\n\t\033[0;33mw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\033[0m\n",w0,w1,w2);
+            printf("\nLogit Equation:\n\tZ = (%.3f) + (%.3f)USR + (%.3f)IRR\n",w0,w1,w2);
             z = w0 + (w1)*(atof(ARG[1])) + (w2)*(atof(ARG[2]));
+            printf("\nLogit(inputUSR,inputIRR) = %f\nSigmoid: %f\n",z,sigmoid(z));  
             int prediction = sigmoid(z) > 0.5 ? 1 : 0 ;
-            if(!prediction){putchar('1');exit(EXIT_SUCCESS);}
-            else{putchar('0');exit(EXIT_SUCCESS);}
+            if(!prediction){puts("Prediction : Something is there!");exit(EXIT_SUCCESS);}
+            else{puts("Prediction : Something is NOT there!");}
             exit(EXIT_SUCCESS);
         }
+        //printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
     }
     return 0;
 }
