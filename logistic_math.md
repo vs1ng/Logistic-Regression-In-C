@@ -26,6 +26,7 @@
 # Example:
 
 **Data:**
+
 ```
 IRreading | USisThere | USdistance | isThere
     1     |     1     |     5      |    1

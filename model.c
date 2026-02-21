@@ -40,6 +40,9 @@ int main(int AC, char *ARG[]){
             printf("\nLogit Equation:\n\tZ = (%.3f) + (%.3f)USR + (%.3f)IRR\n",w0,w1,w2);
             z = w0 + (w1)*(atof(ARG[1])) + (w2)*(atof(ARG[2]));
             printf("\nLogit(inputUSR,inputIRR) = %f\nSigmoid: %f\n",z,sigmoid(z));  
+            int prediction = sigmoid(z) > 0.5 ? 1 : 0 ;
+            if(!prediction){puts("Prediction : Something is there!");exit(EXIT_SUCCESS);}
+            else{puts("Prediction : Something is NOT there!");}
             exit(EXIT_SUCCESS);
         }
         //printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
