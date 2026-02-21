@@ -29,9 +29,9 @@ int main(void){
             s1 += (Ps[pos]-IST[pos])*(USR[pos]);
             s2 += (Ps[pos]-IST[pos])*(IRR[pos]);
         }
-        w0 = w0 - alpha*s0 ;
-        w1 = w1 - alpha*s1 ;
-        w2 = w2 - alpha*s2 ;
+        w0 = w0 - alpha*(s0/n) ;
+        w1 = w1 - alpha*(s1/n) ;
+        w2 = w2 - alpha*(s2/n) ;
         printf("Epoch: %d\nAdjusted Weights:\n\tw0\t:\t%f\n\tw1\t:\t%f\n\tw2\t:\t%f\n",ep,w0,w1,w2);
     }
     return 0;
